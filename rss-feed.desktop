@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=rss-feed
+Comment=RSS Feed Notifications 
+Icon=quiterss
+Exec=rss-feed
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
+X-GNOME-UsesNotifications=true

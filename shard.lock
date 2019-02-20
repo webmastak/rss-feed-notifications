@@ -1,0 +1,10 @@
+version: 1.0
+shards:
+  gobject:
+    github: jhass/crystal-gobject
+    commit: 1f50567e556d1f956ef3202cd50e11cfcc3a42bb
+
+  rss:
+    github: ruivieira/rss
+    commit: 5f852f1e28f573dd3c72e7624d44db8ac41d8477
+

@@ -1,0 +1,21 @@
+name: rss-feed
+version: 0.1.2
+
+authors:
+  - Andrew <web-meister@mail.ru>
+
+targets:
+  rss-feed:
+    main: src/rss-feed.cr
+
+dependencies:
+  rss:
+    github: ruivieira/rss
+
+  gobject:
+    github: "jhass/crystal-gobject"
+    branch: "master"    
+
+crystal: 0.27.0
+
+license: MIT
