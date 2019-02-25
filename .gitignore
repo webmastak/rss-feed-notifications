@@ -4,4 +4,5 @@
 /.shards/
 *.dwarf
 .editorconfig
+/src/rss-feed-notifications.old.cr
 rss-feed-notifications

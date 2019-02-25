@@ -1,5 +1,5 @@
 name: rss-feed
-version: 0.1.0
+version: 0.2.0
 
 authors:
   - Andrew <web-meister@mail.ru>
@@ -14,7 +14,7 @@ dependencies:
 
   gobject:
     github: "jhass/crystal-gobject"
-    branch: "master"    
+    branch: "master"
 
 crystal: 0.27.0
 
