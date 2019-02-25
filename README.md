@@ -6,7 +6,7 @@ This application is based on two crystal shards:
   * https://github.com/jhass/crystal-gobject
   * https://github.com/ruivieira/rss
 
-Works like this - if the publication date is equal to the current date, shows a notification and opens the browser with the news page.
+It works like this - if the date of publication coincides with the current date, a notification is displayed and when you click on the notification, a browser opens with a news page.
 
 
 ## Dependencies
