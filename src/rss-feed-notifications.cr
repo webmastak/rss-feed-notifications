@@ -27,6 +27,7 @@ icon = conf.to_a.skip(2).first
 feed = RSS.parse conf.to_a.skip(3).first
 
 loop do
+
   e = feed.items.first
   body = e.title.split(" - ").first
   pub_date = e.pubDate.split(" ").skip(1).first.to_i
@@ -53,11 +54,9 @@ loop do
   if compare_date == 1
     unless File.exists? PATH_LOCK
       notification.update
-      loop do
-        Gtk.main_iteration
-        break if Gtk.events_pending
-        sleep 1
-      end
+        while !Gtk.events_pending
+          Gtk.main_iteration
+        end
       File.write PATH_LOCK, e.pubDate
     end
   else
