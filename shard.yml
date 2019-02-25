@@ -16,6 +16,6 @@ dependencies:
     github: "jhass/crystal-gobject"
     branch: "master"
 
-crystal: 0.27.0
+crystal: 0.27.2
 
 license: MIT
