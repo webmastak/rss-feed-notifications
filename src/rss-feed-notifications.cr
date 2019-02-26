@@ -32,7 +32,7 @@ loop do
   body = e.title.split(" - ").first
   pub_date = e.pubDate.split(" ").skip(1).first.to_i
   current_date = Time.now.to_s("%e").to_i
-  compare_date = pub_date == current_date || pub_date+1 == current_date ? 1 : 0
+  compare_date = pub_date == current_date || pub_date+1 == current_date ? true : false
 
   notification = Notify::Notification.build do |n|
     n.summary = summary
@@ -51,12 +51,13 @@ loop do
     end
   end
 
-  if compare_date == 1
+  if compare_date
     unless File.exists? PATH_LOCK
       notification.update
-        while !Gtk.events_pending
-          Gtk.main_iteration
-        end
+      while !Gtk.events_pending
+        Gtk.main_iteration
+        break if notification.on_closed { next true }
+      end
       File.write PATH_LOCK, e.pubDate
     end
   else
