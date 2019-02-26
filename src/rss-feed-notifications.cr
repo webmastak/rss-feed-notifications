@@ -58,7 +58,7 @@ loop do
         Gtk.main_iteration
         break if notification.on_closed { next true }
       end
-      File.write PATH_LOCK, e.pubDate
+      File.write PATH_LOCK, e.pubDate if Gtk.events_pending
     end
   else
     File.delete PATH_LOCK if File.exists? PATH_LOCK
