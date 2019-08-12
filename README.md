@@ -31,14 +31,14 @@ In the launch shortcut file `rss-feed-notifications.desktop` replace `Icon=quite
 
 ## Usage
 
-File `~/.config/rssfeed_config` with settings default to be created automatically:
+File `~/.config/<application-name>.yml` with settings default to be created automatically:
 
-1. string `news check interval at seconds`
-2. string `summary`
-3. string `icon notifications`
-4. string `url feed`
+* `refresh:` news check interval at seconds
+* `summary:` summary
+* `icon:` icon notifications
+* `url:` url feed
 
-Replace the parameters with your own.
+You can change the parameters. Can also rename an application, for example **rss-feed-notifications** to **rss-feed**
 
 
 ## Contributing
