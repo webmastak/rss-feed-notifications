@@ -1,6 +1,7 @@
 require "rss"
 require "file"
 require "yaml"
+require "logger"
 require "gobject/gtk"
 require "gobject/gio"
 require "gobject/notify"
@@ -8,23 +9,34 @@ require "gobject/notify"
 LibNotify.init("rss-feed-notifications")
 
 XDG_CONFIG_HOME = ENV["XDG_CONFIG_HOME"]? || File.expand_path("~/.config")
-LOCK = File.join(XDG_CONFIG_HOME, "#{PROGRAM_NAME}.lock")
-CONFIG = File.join(XDG_CONFIG_HOME, "#{PROGRAM_NAME}.yml")
+WORKING_DIR = File.join(XDG_CONFIG_HOME, "/#{PROGRAM_NAME}")
+Dir.mkdir WORKING_DIR unless File.exists? WORKING_DIR
+LOG = File.join(WORKING_DIR, "error.log")
+LOCK = File.join(WORKING_DIR, "notifi.lock")
+CONFIG = File.join(WORKING_DIR,"config.yml")
+LOGGER = Logger.new(File.open(LOG, "a"), level: Logger::ERROR)
+ICON = File.expand_path("../res/icon/application-rss+xml-symbolic.svg", File.dirname(__FILE__))
 
 unless File.exists? CONFIG
   File.write CONFIG, { 
-    refresh: 3600,
+    days: 1,
+    refresh: 60,
+    label: "Show",
     summary: "Forum Manjaro",
-    icon: "application-rss+xml-symbolic",
-    url: "https://forum.manjaro.org/c/announcements/stable-updates.rss"
+    url: "https://forum.manjaro.org/c/announcements/stable-updates.rss",
+    icon: "nil"   
   }.to_yaml
 end
 
 conf = YAML.parse(File.read(CONFIG))
+days = conf["days"].as_i
 refresh = conf["refresh"].as_i
+label = conf["label"].as_s
 summary = conf["summary"].as_s
-icon = conf["icon"].as_s
 url = conf["url"].as_s
+icon = conf["icon"].as_s
+
+icon = icon != "nil" ? icon : ICON 
 
 loop do
   begin
@@ -40,31 +52,39 @@ loop do
       n.urgency = :normal
       n.icon_name = icon
 
-      action "default", "Show" do
+      action "default", "#{label}" do
         Gio::AppInfo.launch_default_for_uri(e.link, nil)
         Pointer(Void).null.value
       end
 
-      action "show", "Show" do
+      action "show", "#{label}" do
         Gio::AppInfo.launch_default_for_uri(e.link, nil)
         Pointer(Void).null.value
       end
     end
 
-    if [pub_date, pub_date+1].includes?(current_date)
+    if [pub_date, pub_date+days].includes?(current_date)
       unless File.exists? LOCK
         notification.update
         while !Gtk.events_pending
           Gtk.main_iteration
           break if notification.on_closed { next true }
         end
-        File.write LOCK, e.pubDate if Gtk.events_pending
+        
+        if Gtk.events_pending
+          File.write LOCK, e.pubDate 
+          parent = Process.pid
+          fork = Process.fork do
+            Process.exec("#{PROGRAM_NAME}")
+          end 
+          Process.kill(Signal::KILL, parent)                      
+        end
       end
     else
       File.delete LOCK if File.exists? LOCK
     end
-  rescue
-    sleep refresh
+  rescue error
+    LOGGER.fatal error
   end
-  sleep refresh
+  sleep refresh.minutes
 end
