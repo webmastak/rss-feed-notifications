@@ -31,12 +31,14 @@ In the launch shortcut file `rss-feed-notifications.desktop` replace `Icon=quite
 
 ## Usage
 
-File `~/.config/<application-name>.yml` with settings default to be created automatically:
+File `~/.config/<application-name>/config.yml` with settings default to be created automatically when you first start the application, with settings:
 
-* `refresh:` news check interval at seconds
+* `days:` example the news came out on 08/15/2019, and will be show +1 day from the day  release, until it is viewed from the notification
+* `refresh:` news check interval at minutes
+* `label:` notification label in your language, default: Show
 * `summary:` summary
-* `icon:` icon notifications
 * `url:` url feed
+* `icon:` if you want to put your icon for notification, replace for example `icon: nil` with `icon: your-icon-symbolic`
 
 You can change the parameters. Can also rename an application, for example **rss-feed-notifications** to **rss-feed**
 
