@@ -44,7 +44,7 @@ loop do
     e = feed.items.first
     body = e.title.split(" - ").first
     pub_date = e.pubDate.split(" ").skip(1).first.to_i
-    current_date = Time.now.to_s("%e").to_i
+    current_date = Time.local.to_s("%e").to_i
     
     notification = Notify::Notification.build do |n|
       n.summary = summary
