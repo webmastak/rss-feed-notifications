@@ -12,7 +12,6 @@ XDG_CONFIG_HOME = ENV["XDG_CONFIG_HOME"]? || File.expand_path("~/.config")
 WORKING_DIR = File.join(XDG_CONFIG_HOME, "/#{PROGRAM_NAME}")
 Dir.mkdir WORKING_DIR unless File.exists? WORKING_DIR
 LOG = File.join(WORKING_DIR, "error.log")
-LOCK = File.join(WORKING_DIR, "notifi.lock")
 CONFIG = File.join(WORKING_DIR,"config.yml")
 LOGGER = Logger.new(File.open(LOG, "a"), level: Logger::ERROR)
 ICON = File.expand_path("../res/icon/application-rss+xml-symbolic.svg", File.dirname(__FILE__))
@@ -35,10 +34,10 @@ label = conf["label"].as_s
 summary = conf["summary"].as_s
 url = conf["url"].as_s
 icon = conf["icon"].as_s
+icon = icon != "nil" ? icon : ICON  
+lock = false
 
-icon = icon != "nil" ? icon : ICON 
-
-loop do
+GLib.timeout(refresh.minutes.to_i) do 
   begin
     feed = RSS.parse url
     e = feed.items.first
@@ -64,27 +63,18 @@ loop do
     end
 
     if [pub_date, pub_date+days].includes?(current_date)
-      unless File.exists? LOCK
-        notification.update
-        while !Gtk.events_pending
-          Gtk.main_iteration
-          break if notification.on_closed { next true }
-        end
-        
-        if Gtk.events_pending
-          File.write LOCK, e.pubDate 
-          parent = Process.pid
-          fork = Process.fork do
-            Process.exec("#{PROGRAM_NAME}")
-          end 
-          Process.kill(Signal::KILL, parent)                      
-        end
+      unless lock
+      	notification.update
+      	lock = true if notification.on_closed { next true }
       end
-    else
-      File.delete LOCK if File.exists? LOCK
+    else 
+      lock = false
     end
+    
   rescue error
     LOGGER.fatal error
-  end
-  sleep refresh.minutes
-end
+  end    
+  true
+end  
+
+Gtk.main
