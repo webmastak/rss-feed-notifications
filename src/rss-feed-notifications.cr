@@ -15,6 +15,7 @@ LOG = File.join(WORKING_DIR, "error.log")
 CONFIG = File.join(WORKING_DIR,"config.yml")
 LOGGER = Logger.new(File.open(LOG, "a"), level: Logger::ERROR)
 ICON = File.expand_path("../res/icon/application-rss+xml-symbolic.svg", File.dirname(__FILE__))
+BRANCH = `pacman-mirrors -aG`.chomp
 
 unless File.exists? CONFIG
   File.write CONFIG, { 
@@ -22,7 +23,7 @@ unless File.exists? CONFIG
     refresh: 60,
     label: "Show",
     summary: "Forum Manjaro",
-    url: "https://forum.manjaro.org/c/announcements/stable-updates.rss",
+    url: "https://forum.manjaro.org/c/announcements/{BRANCH}-updates.rss",
     icon: "nil"   
   }.to_yaml
 end
@@ -32,7 +33,7 @@ days = conf["days"].as_i
 refresh = conf["refresh"].as_i
 label = conf["label"].as_s
 summary = conf["summary"].as_s
-url = conf["url"].as_s
+url = conf["url"].as_s.gsub("{BRANCH}", "#{BRANCH}")
 icon = conf["icon"].as_s
 icon = icon != "nil" ? icon : ICON  
 lock = false
