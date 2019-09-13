@@ -1,4 +1,4 @@
-# RSS Feed Notifications
+# RSS Feed Notifications for Manjaro and Arch Linux
 
 Notifications news about the release of a new update for Linux distributive based on rolling releases, such as Manjaro and Arch linux.
 
@@ -19,12 +19,9 @@ It works like this - if the date of publication coincides with the current date,
 
 In the launch shortcut file `rss-feed-notifications.desktop` replace `Icon=quiterss` with your own.
 
-1. `git clone git: //github.com/webmastak/rss-feed-notifications`
-2. `cd rss-feed-notifications`
-3. `install shards`
-4. `crystal build --release --no-debug src/rss-feed-notifications.cr`
-5. `cp ~/rss-feed-notifications/rss-feed-notifications ~/.local/bin/rss-feed-notifications`
-6. `cp ~/rss-feed-notifications/rss-feed-notifications.desktop ~/.config/autostart/rss-feed-notifications.desktop`
+1. `git clone git://github.com/webmastak/rss-feed`
+2. `cd rss-feed`
+3. `make`
 7. `restart system`
 8. `enjoy`
 
@@ -40,7 +37,7 @@ File `~/.config/<application-name>/config.yml` with settings default to be creat
 * `url:` url feed
 * `icon:` if you want to put your icon for notification, replace for example `icon: nil` with `icon: your-icon-symbolic`
 
-You can change the parameters. Can also rename an application, for example **rss-feed-notifications** to **rss-feed**
+You can change the parameters.
 
 
 ## Contributing
