@@ -8,7 +8,7 @@ require "gobject/notify"
 
 LibNotify.init("rss-feed-notifications")
 
-XDG_CONFIG_HOME = ENV["XDG_CONFIG_HOME"]? || File.expand_path("~/.config")
+XDG_CONFIG_HOME = ENV["XDG_CONFIG_HOME"]? || File.expand_path(".config")
 WORKING_DIR = File.join(XDG_CONFIG_HOME, "/#{PROGRAM_NAME}")
 Dir.mkdir WORKING_DIR unless File.exists? WORKING_DIR
 LOG = File.join(WORKING_DIR, "error.log")
