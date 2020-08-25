@@ -6,7 +6,7 @@ authors:
 
 targets:
   rss-feed:
-    main: src/rss-feed-notifications.cr
+    main: src/rss-feed.cr
 
 dependencies:
   rss:
