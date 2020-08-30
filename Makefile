@@ -1,8 +1,10 @@
 FILE:= $(shell basename $(shell pwd))
+DIR:= ~/.local/bin
 
-all:
+all: 
 	@shards build --release --no-debug
-	@cp bin/$(FILE) ~/.local/bin/$(FILE)
+	@mkdir -p $(DIR)
+	@cp bin/$(FILE) $(DIR)/$(FILE)
 	@cp rss-feed-notifications.desktop ~/.config/autostart/rss-feed-notifications.desktop
 	@rm -f bin/*
 	@rm -fd bin

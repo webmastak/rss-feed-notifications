@@ -1,12 +1,12 @@
-name: rss-feed
+name: rss-feed-notifications
 version: 1.0.0
 
 authors:
   - Andrew <web-meister@mail.ru>
 
 targets:
-  rss-feed:
-    main: src/rss-feed.cr
+  rss-feed-notifications:
+    main: src/rss-feed-notifications.cr
 
 dependencies:
   rss:

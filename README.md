@@ -19,8 +19,8 @@ It works like this - if the date of publication coincides with the current date,
 
 In the launch shortcut file `rss-feed-notifications.desktop` replace `Icon=quiterss` with your own.
 
-1. `git clone git://github.com/webmastak/rss-feed`
-2. `cd rss-feed`
+1. `git clone git://github.com/webmastak/rss-feed-notifications`
+2. `cd rss-feed-notifications`
 3. `make`
 7. `restart system`
 8. `enjoy`
