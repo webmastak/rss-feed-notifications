@@ -1,11 +1,11 @@
-name: rss-feed
+name: rss-feed-notifications
 version: 1.0.0
 
 authors:
   - Andrew <web-meister@mail.ru>
 
 targets:
-  rss-feed:
+  rss-feed-notifications:
     main: src/rss-feed-notifications.cr
 
 dependencies:
@@ -16,6 +16,6 @@ dependencies:
     github: "jhass/crystal-gobject"
     branch: "master"
 
-crystal: 0.30.1
+crystal: 0.35.1
 
 license: MIT
