@@ -42,8 +42,8 @@ GLib.timeout(refresh.minutes.to_i) do
   begin
     feed = RSS.parse url
     e = feed.items.first
-    body = e.title.split(" - ").first
-    pub_date = e.pubDate.split(" ").skip(1).first.to_i
+    body = e.title.to_s.split(" - ").first
+    pub_date = e.pubDate.to_s.split(" ").first.to_s.split("-").skip(2).first.to_i
     current_date = Time.local.to_s("%e").to_i
     
     notification = Notify::Notification.build do |n|
@@ -53,12 +53,12 @@ GLib.timeout(refresh.minutes.to_i) do
       n.icon_name = icon
 
       action "default", "#{label}" do
-        Gio::AppInfo.launch_default_for_uri(e.link, nil)
+        Gio::AppInfo.launch_default_for_uri(e.link.to_s, nil)
         Pointer(Void).null.value
       end
 
       action "show", "#{label}" do
-        Gio::AppInfo.launch_default_for_uri(e.link, nil)
+        Gio::AppInfo.launch_default_for_uri(e.link.to_s, nil)
         Pointer(Void).null.value
       end
     end
