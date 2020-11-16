@@ -11,6 +11,7 @@ targets:
 dependencies:
   rss:
     github: ruivieira/rss
+    branch: "master"
 
   gobject:
     github: "jhass/crystal-gobject"
