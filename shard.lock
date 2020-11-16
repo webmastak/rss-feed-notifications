@@ -1,10 +1,10 @@
-version: 1.0
+version: 2.0
 shards:
   gobject:
-    github: jhass/crystal-gobject
-    commit: 1f50567e556d1f956ef3202cd50e11cfcc3a42bb
+    git: https://github.com/jhass/crystal-gobject.git
+    version: 0.9.1+git.commit.ffcc034046b889b3993e87ba555baa5b7d8850fc
 
   rss:
-    github: ruivieira/rss
-    commit: 5f852f1e28f573dd3c72e7624d44db8ac41d8477
+    git: https://github.com/ruivieira/rss.git
+    version: 0.2.1+git.commit.0d15c00142f1b9ab9122c310ac98ef8605adef8a
 
